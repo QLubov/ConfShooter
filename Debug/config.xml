@@ -1,0 +1,8 @@
+<graphics>
+  <width>800</width>
+  <height>600</height>
+  <screenMode>0</screenMode>
+</graphics>
+<options>
+  <level>textures\\level_template.b3d</level>
+</options>
