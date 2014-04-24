@@ -3,13 +3,13 @@
 #include "objectTypes.h"
 
 Bot::Bot(float radius, Handle handle, Handle player)
-: AI(radius), mHandle(handle), mPlayer(player)
+: AI(radius), mHandle(handle), mPlayer(player), mHealth(100)
 {
 	xEntityType(mHandle, tBot);
 	xEntityRadius(mHandle, 5);
 	up = true;
-	UpperLimit = xEntityY(mHandle) + 4.0;
-	LowLimit = xEntityY(mHandle) - 4.0;
+	UpperLimit = xEntityY(mHandle) + 4.0f;
+	LowLimit = xEntityY(mHandle) - 4.0f;
 }
 
 void Bot::React()
@@ -22,10 +22,10 @@ void Bot::React()
 void Bot::update()
 {
 	if(xEntityY(mHandle) < UpperLimit && up )
-		xMoveEntity(mHandle, 0, 0.05, 0);
+		xMoveEntity(mHandle, 0, 0.05f, 0);
 	else
 	{
-		xMoveEntity(mHandle, 0, -0.08, 0);
+		xMoveEntity(mHandle, 0, -0.08f, 0);
 		up = false;
 	}
 	if (xEntityY(mHandle) <= LowLimit)

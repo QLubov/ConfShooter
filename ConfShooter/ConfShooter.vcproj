@@ -182,7 +182,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Bot.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Bullet.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ConfigFile.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GameMechanic.cpp"
 				>
 			</File>
 			<File
@@ -228,11 +240,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Bot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Bullet.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ConfigFile.h"
 				>
 			</File>
 			<File
+				RelativePath=".\GameMechanic.h"
+				>
+			</File>
+			<File
 				RelativePath=".\LevelLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ObjectTypes.h"
 				>
 			</File>
 			<File

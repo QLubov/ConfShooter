@@ -8,13 +8,12 @@
 class Application 
 {
 	float GetDistance(Handle firstObj, Handle secondObj);
-	std::vector<Bot*> mBots;
-	Player *player;
 	ConfigFile config;
 	LevelLoader *loader;
+	void UpdateHud();
 public:
 	Application(const std::string& path);
 	void CreateObjects();
-	void update(float delta);
+	bool update(float delta);
 	~Application();
 };

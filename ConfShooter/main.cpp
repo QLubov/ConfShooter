@@ -1,6 +1,7 @@
 #include "xors3d.h"
 #include <iostream>
 #include "Application.h"
+#include "GameMechanic.h"
 using namespace std;
 
 int main()
@@ -8,9 +9,6 @@ int main()
 	Application app("config.xml");
 	app.CreateObjects();
 
-	while(!xKeyHit(KEY_ESCAPE))
-	{
-		app.update(1);
-	}
+	while(app.update(1));
 }
 
