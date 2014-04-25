@@ -8,22 +8,26 @@
 class GameMechanic
 {
 	std::vector<Bot*> mBots;
-	Player *player;
+	Player *mPlayer;
 	std::vector<Bullet*> mBullets;	
 	Handle aim;
 	
 	void UpdateShoot(float dt);
-	GameMechanic(LevelLoader* );
-	static GameMechanic* mInst;
+	GameMechanic();
 	void RemoveBullet(std::vector<Bullet*>::iterator iterator);
 	void RemoveBot(std::vector<Bot*>::iterator iterator);
 public:
 	void Update(float dt);
 	void Shoot(Handle owner);
-
-	static void Init(LevelLoader* loader) { mInst = new GameMechanic(loader); } 
-	static GameMechanic* Instance() { if(mInst) return mInst; else return 0; }
+	
+	void CreateBot();
+	void CreateBot(Handle);
+	bool CreatePlayer(Handle);
+	void ResetPlayer(Handle);
+	static GameMechanic& Instance() { static GameMechanic inst; return inst;}
 	Handle GetAim() const {return aim;}
 
 	~GameMechanic(void);
 };
+
+#define GAME GameMechanic::Instance()

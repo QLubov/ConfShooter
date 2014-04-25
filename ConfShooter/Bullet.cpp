@@ -36,5 +36,5 @@ void Bullet::Init(float x, float y, float z, float pitch, float yaw, float roll)
 
 void Bullet::Update(float dt)
 {
-	xMoveEntity(mBullet, 0, 0, .5f * dt);
+	xMoveEntity(mBullet, 0, 0, 5.5f * dt);
 }

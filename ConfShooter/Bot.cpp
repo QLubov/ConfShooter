@@ -6,12 +6,17 @@ Bot::Bot(float radius, Handle handle, Handle player)
 : AI(radius), mHandle(handle), mPlayer(player), mHealth(100)
 {
 	xEntityType(mHandle, tBot);
-	xEntityRadius(mHandle, 5);
+	xEntityRadius(mHandle, 50);
 	up = true;
 	UpperLimit = xEntityY(mHandle) + 4.0f;
 	LowLimit = xEntityY(mHandle) - 4.0f;
+	xCollisions(tPlayer, tBot, 2, 1);
 }
 
+Bot::~Bot()
+{
+	xFreeEntity(mHandle);
+}
 void Bot::React()
 {
 	//std::cout<<mHandle<<std::endl;
@@ -30,4 +35,11 @@ void Bot::update()
 	}
 	if (xEntityY(mHandle) <= LowLimit)
 		up = true;
+}
+
+void Bot::DealDamage(unsigned int dmg)
+{
+	mHealth -= dmg;
+	if (mHealth < 0)
+		mHealth = 0;
 }

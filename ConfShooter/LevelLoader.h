@@ -11,4 +11,9 @@ public:
 	~LevelLoader(void);
 	Handle GetObjectByName(const std::string& name);
 	std::vector<Handle> GetObjectArray(const std::string& name);
+
+	void LoadDoors();
+	void LoadKeys();
+	void LoadBots();
+	void LoadPlayer();
 };

@@ -1,46 +1,42 @@
 #include "GameMechanic.h"
 using namespace std;
 
-GameMechanic* GameMechanic::mInst = 0;
 
-GameMechanic::GameMechanic(LevelLoader* loader)
+GameMechanic::GameMechanic()
+:mPlayer(0)
 {	
 	xTurnEntity(xCreateLight(), 45, 45, 45);
-
-	player = new Player(loader->GetObjectByName("player"));	
-	vector<Handle> bots = loader->GetObjectArray("bot");
-	for(size_t i = 0; i < bots.size(); ++i)
-	{
-		Bot* bot = new Bot(200, bots[i], player->getHandle());
-		mBots.push_back(bot);
-	}
-
-	Handle door = loader ->GetObjectByName("door");
-	xEntityType(door,tDoor);
-
-	xCollisions(tPlayer, tDoor, 2, 1);
-	xCollisions(tPlayer, tBot, 2, 1);
 
 	aim = xLoadImage("textures/aim.png");
 }
 
 GameMechanic::~GameMechanic(void)
 {
-	delete player;
+	delete mPlayer;
 	for(size_t i = 0; i < mBots.size(); ++i)
 		delete mBots[i];
+}
+void GameMechanic::CreateBot()
+{
+}
+void GameMechanic::CreateBot(Handle handle)
+{
+	const float BOT_REACTION_RADIUS = 200.f;
+
+	Bot* bot = new Bot(BOT_REACTION_RADIUS, handle, mPlayer->getHandle());
+	mBots.push_back(bot);
 }
 
 void GameMechanic::Update(float dt)
 {
 	for(size_t i = 0; i < mBots.size(); ++i)
-		if(mBots[i]->GetReactionRadius() >= xEntityDistance(mBots[i]->GetHandle(), player->getHandle()))
+		if(mBots[i]->GetReactionRadius() >= xEntityDistance(mBots[i]->GetHandle(), mPlayer->getHandle()))
 			mBots[i]->React();
 		else
 			mBots[i]->update();
-	player->Update(dt);
-	UpdateShoot(dt);
-	
+	if(mPlayer)
+		mPlayer->Update(dt);
+	UpdateShoot(dt);	
 }
 
 void GameMechanic::Shoot(Handle owner)
@@ -60,10 +56,10 @@ void GameMechanic::UpdateShoot(float dt)
 		for (botIt = mBots.begin(); botIt != mBots.end(); ++botIt )
 		{
 			Bot* bot = *botIt;
-			if(xEntityDistance(bot->GetHandle(), bullet->GetHandle() < 5.f))
+			if(xEntityDistance(bot->GetHandle(), bullet->GetHandle()) < 50.f)
 			{
-				bot->DealDamage(player->GetDamage());
-				if(bot->GetHealth() <= 0)
+				bot->DealDamage(mPlayer->GetDamage());
+				if(bot->GetHealth() == 0)
 					RemoveBot(botIt);
 				RemoveBullet(it);
 				return;
@@ -92,4 +88,22 @@ void GameMechanic::RemoveBot(vector<Bot*>::iterator iterator)
 	delete *iterator;
 	mBots.erase(iterator);
 	return;
+}
+
+bool GameMechanic::CreatePlayer(Handle handle)
+{
+	if(mPlayer == 0)
+	{
+		mPlayer = new Player(handle);
+		return true;
+	}
+	return false;
+}
+
+void GameMechanic::ResetPlayer(Handle handle)
+{
+	if (mPlayer)
+	{
+		xPositionEntity(mPlayer->getHandle(), xEntityX(handle,true), xEntityY(handle,true), xEntityZ(handle,true));
+	}
 }

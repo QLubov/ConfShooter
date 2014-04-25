@@ -13,13 +13,16 @@ Application::Application(const std::string& path)
 }
 void Application::CreateObjects()
 {
-	GameMechanic::Init(loader);
+	loader->LoadPlayer();
+	loader->LoadBots();
+	loader->LoadDoors();
+	loader->LoadKeys();
 }
 bool Application::update(float delta)
 {
 	if(xKeyHit(KEY_ESCAPE))
 		return false;
-	GameMechanic::Instance()->Update(delta);
+	GAME.Update(delta);
 	xUpdateWorld();
 	xRenderWorld();
 	UpdateHud();
@@ -45,5 +48,5 @@ float Application::GetDistance(Handle firstObj, Handle secondObj)
 
 void Application::UpdateHud()
 {
-	xDrawImage(GameMechanic::Instance()->GetAim(), (float)config.width / 2, (float)config.height / 2);
+	xDrawImage(GAME.GetAim(), (float)config.width / 2, (float)config.height / 2);
 }

@@ -29,6 +29,6 @@ void Player::Update(float dt)
 
 	if(xMouseDown(MOUSE_LEFT))
 	{
-		GameMechanic::Instance()->Shoot(camera);
+		GAME.Shoot(camera);
 	}
 }
